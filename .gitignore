@@ -39,3 +39,10 @@ m4/ltversion.m4
 m4/lt~obsolete.m4
 src/stamp-h1
 libsecp256k1.pc
+/bin/
+/obj/
+*.suo
+*.sdf
+*.aps
+*.opensdf
+*.user
