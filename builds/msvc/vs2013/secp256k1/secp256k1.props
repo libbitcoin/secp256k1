@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Globals">
+    <_PropertySheetDisplayName>SECP256K1 Common Settings</_PropertySheetDisplayName>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+
+  <!-- User Interface -->
+
+  <ItemGroup Label="BuildOptionsExtension">
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)$(ProjectName).xml" />
+  </ItemGroup>
+
+  <!-- Configuration -->
+  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(RepoRoot)src\;$(RepoRoot)\include\;$(RepoRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4244;4267;4334;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <EnablePREfast>false</EnablePREfast>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>inline=__inline;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      
+      <!-- Set ecmult gen precision bits (autotools defaults, may be required for vc++|win32). -->
+      <PreprocessorDefinitions>ECMULT_GEN_PREC_BITS=4;ECMULT_WINDOW_SIZE=15;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ConfigurationType)' == 'DynamicLibrary'">SECP256K1_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      
+      <!-- Enable verification macros in debug builds. -->
+      <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Debug')) != -1">VERIFY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <!-- Select bignum implementation, requires gmp (mpir). -->
+      <PreprocessorDefinitions Condition="'$(Option-gmp)' == ''">USE_NUM_NONE;USE_FIELD_INV_BUILTIN;USE_SCALAR_INV_BUILTIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!--<PreprocessorDefinitions Condition="'$(Option-gmp)' == 'true'">USE_NUM_GMP;USE_FIELD_INV_NUM;USE_SCALAR_INV_NUM;%(PreprocessorDefinitions)</PreprocessorDefinitions>-->
+      
+      <!-- Define this symbol to enable x86_64 assembly optimizations (may not support vc++). -->
+      <PreprocessorDefinitions Condition="'$(Option-assembly)' == 'true' And '$(Platform)' == 'x64'">USE_ASM_X86_64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      
+      <!-- Enable if there is a config.h file. -->
+      <PreprocessorDefinitions Condition="'$(Option-config)' == 'true'">HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      
+      <!-- Build additional modules, extrakeys and schnorrsig are experimental. -->
+      <PreprocessorDefinitions Condition="'$(Option-ecdh)' == 'true'">ENABLE_MODULE_ECDH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Option-recovery)' == 'true'">ENABLE_MODULE_RECOVERY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Option-extrakeys)' == 'true'">ENABLE_MODULE_EXTRAKEYS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Option-schnorrsig)' == 'true'">ENABLE_MODULE_SCHNORRSIG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <!-- Dependencies -->
+  
+  <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
+    <Linkage-mpir>dynamic</Linkage-mpir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
+    <Linkage-mpir>static</Linkage-mpir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
+    <Linkage-mpir>static</Linkage-mpir>
+  </PropertyGroup>
+
+  <!-- Messages -->
+
+  <Target Name="OptionInfo" BeforeTargets="PrepareForBuild">
+    <!--<Message Text="Option-gmp        : $(Option-gmp)" Importance="high"/>-->
+    <Message Text="Option-assembly   : $(Option-assembly)" Importance="high"/>
+    <Message Text="Option-config     : $(Option-config)" Importance="high"/>
+    <Message Text="Option-ecdh       : $(Option-ecdh)" Importance="high"/>
+    <Message Text="Option-recovery   : $(Option-recovery)" Importance="high"/>
+    <Message Text="Option-extrakeys  : $(Option-extrakeys)" Importance="high"/>
+    <Message Text="Option-schnorrsig : $(Option-schnorrsig)" Importance="high"/>
+  </Target>
+
+  <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
+    <!--<Message Text="Linkage-mpir      : $(Linkage-mpir)" Importance="high"/>-->
+  </Target>
+
+</Project>

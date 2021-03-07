@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectSchemaDefinitions xmlns="clr-namespace:Microsoft.Build.Framework.XamlTypes;assembly=Microsoft.Build.Framework">
+  <Rule Name="secp256k1_tests-options-uiextension" PageTemplate="tool" DisplayName="Secp256k1 Tests Options" SwitchPrefix="/" Order="1">
+    <Rule.Categories>
+      <!--<Category Name="gmp" DisplayName="gmp" />-->
+      <!--<Category Name="testssl" DisplayName="testssl" />-->
+      <Category Name="config" DisplayName="config" />
+      <Category Name="ecdh" DisplayName="ecdh" />
+      <Category Name="recovery" DisplayName="recovery" />
+      <Category Name="extrakeys" DisplayName="extrakeys" />
+      <Category Name="schnorrsig" DisplayName="schnorrsig" />
+    </Rule.Categories>
+    <Rule.DataSource>
+      <DataSource Persistence="ProjectFile" ItemType="" />
+    </Rule.DataSource>
+    <!--<EnumProperty Name="Option-gmp" DisplayName="Use GMP Bignum" Description="Use GMP/MPIR for big numbers." Category="gmp">
+      <EnumValue Name="" DisplayName="No" />
+      <EnumValue Name="true" DisplayName="Yes" />
+    </EnumProperty>-->
+    <!--<EnumProperty Name="Option-testssl" DisplayName="Enable OpenSSL Tests" Description="Enable OpenSSL tests." Category="testssl">
+      <EnumValue Name="" DisplayName="No" />
+      <EnumValue Name="true" DisplayName="Yes" />
+    </EnumProperty>-->
+    <EnumProperty Name="Option-config" DisplayName="Include Configuration File" Description="Include 'libsecp256k1-config.h'" Category="config">
+      <EnumValue Name="" DisplayName="No" />
+      <EnumValue Name="true" DisplayName="Yes" />
+    </EnumProperty>
+    <EnumProperty Name="Option-ecdh" DisplayName="Build ecdh" Description="Build the ecdh module." Category="ecdh">
+      <EnumValue Name="" DisplayName="No" />
+      <EnumValue Name="true" DisplayName="Yes" />
+    </EnumProperty>
+    <EnumProperty Name="Option-recovery" DisplayName="Build recovery" Description="Build the recovery module." Category="recovery">
+      <EnumValue Name="" DisplayName="No" />
+      <EnumValue Name="true" DisplayName="Yes" />
+    </EnumProperty>
+    <EnumProperty Name="Option-extrakeys" DisplayName="Build extrakeys" Description="Build the extrakeys module." Category="extrakeys">
+      <EnumValue Name="" DisplayName="No" />
+      <EnumValue Name="true" DisplayName="Yes" />
+    </EnumProperty>
+    <EnumProperty Name="Option-schnorrsig" DisplayName="Build schnorrsig" Description="Build the schnorrsig module." Category="schnorrsig">
+      <EnumValue Name="" DisplayName="No" />
+      <EnumValue Name="true" DisplayName="Yes" />
+    </EnumProperty>
+  </Rule>
+</ProjectSchemaDefinitions>

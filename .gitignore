@@ -31,6 +31,15 @@ libtool
 *.lo
 *.o
 *~
+
+/bin/
+/obj/
+*.VC.*
+*.suo
+*.ipch
+*.sdf
+*.user
+
 *.log
 *.trs
 src/libsecp256k1-config.h
