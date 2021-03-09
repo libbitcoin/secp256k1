@@ -1,5 +1,10 @@
 AC_PREREQ([2.60])
-AC_INIT([libsecp256k1],[0.1])
+
+#######################################################################################
+### Modified version, origin repo introduces breaking changes without reversioning. ###
+#######################################################################################
+AC_INIT([libsecp256k1],[0.1.0.19])
+
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
 AC_CANONICAL_HOST
