@@ -82,7 +82,11 @@ esac
 
 CFLAGS="-W $CFLAGS"
 
-warn_CFLAGS="-std=c89 -pedantic -Wall -Wextra -Wcast-align -Wnested-externs -Wshadow -Wstrict-prototypes -Wundef -Wno-unused-function -Wno-long-long -Wno-overlength-strings"
+# Libbitcoin added: -Wno-missing-field-initializers to suppress:
+# secp256k1.c:79:9: warning: missing field 'pre_g_128' initializer [-Wmissing-field-initializers]
+# secp256k1.c:80:9: warning: missing field 'blind' initializer [-Wmissing-field-initializers]
+
+warn_CFLAGS="-std=c89 -pedantic -Wall -Wextra -Wcast-align -Wnested-externs -Wshadow -Wstrict-prototypes -Wundef -Wno-unused-function -Wno-long-long -Wno-overlength-strings -Wno-missing-field-initializers"
 saved_CFLAGS="$CFLAGS"
 CFLAGS="$warn_CFLAGS $CFLAGS"
 AC_MSG_CHECKING([if ${CC} supports ${warn_CFLAGS}])
